@@ -1,28 +1,28 @@
 const ctx = c.getContext('2d')
-const size = (c.width = (c.height = innerHeight) / 2) / 10
+const unit = (c.width = (c.height = innerHeight) / 2) / 10
 const ominos = [
   [ [0,1,0,0],
     [0,1,0,0],
     [0,1,0,0],
     [0,1,0,0]], [ [0,1,0],
-                  [1,1,1],
-                  [0,0,0]], [ [0, 1, 0],
+                  [1,1,0],
+                  [0,1,0]], [ [1, 1, 0],
                               [0, 1, 0],
-                              [0, 1, 1]],
+                              [0, 1, 0]],
   [ [0,1,0],
     [0,1,0],
-    [1,1,0]], [ [1,1,0],
-                [0,1,1],
-                [0,0,0]], [ [0,1,1],
+    [1,1,0]], [ [0,1,0],
+                [1,1,0],
+                [1,0,0]], [ [1,0,0],
                             [1,1,0],
-                            [0,0,0]], [ [1,1],
+                            [0,1,0]], [ [1,1],
                                         [1,1]] ]
 const down = [1, 0]
 const right = [0, 1]
 const left = [0, -1]
 let frozen = getEmptyGrid()
 let omino = getRandomOmino()
-let position = getRandomPosition()
+let position = [0, 4]
 const id = setInterval(tick, 500)
 
 onkeydown = handleKeys
@@ -36,12 +36,6 @@ function getRandomOmino() {
   return ominos.at(Math.random() * ominos.length)
 }
 
-function getRandomPosition() {
-  const r = 0
-  const c = Math.floor(Math.random() * (10 - omino.length))
-  return [r, c]
-}
-
 function tick() {
   if (doesIntersect()) {
     clearInterval(id)
@@ -50,16 +44,16 @@ function tick() {
     freeze()
     removeFullRows()
     omino = getRandomOmino()
-    position = getRandomPosition()
+    position = [0, 4]
   }
   render()
 }
 
-function handleKeys(e) {
-  if (e.key === 'ArrowRight') tryMove(right)
-  else if (e.key === 'ArrowLeft') tryMove(left)
-  else if (e.key === 'ArrowDown') tryMove(down)
-  else if (e.key === 'ArrowUp') tryRotate()
+function handleKeys({key}) {
+  if (key === 'ArrowRight') tryMove(right)
+  else if (key === 'ArrowLeft') tryMove(left)
+  else if (key === 'ArrowDown') tryMove(down)
+  else if (key === 'ArrowUp') tryRotate()
   render()
 }
 
@@ -103,8 +97,8 @@ function removeFullRows() {
 }
 
 function drawBlock(r, c) {
-  ctx.fillRect(c * size, r * size, size, size)
-  ctx.strokeRect(c * size, r * size, size, size)
+  ctx.fillRect(c * unit, r * unit, unit, unit)
+  ctx.strokeRect(c * unit, r * unit, unit, unit)
 }
 
 function drawOmino([r, c] = position) {
