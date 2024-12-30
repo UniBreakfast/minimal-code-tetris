@@ -1,4 +1,5 @@
 import { speed, rowCount, columnCount } from './config.js'
+
 import { getEmptyGrid } from './js/model/grid.js'
 import { getRandomOmino } from './js/model/ominos.js'
 import { doesIntersect } from './js/model/checks.js'
