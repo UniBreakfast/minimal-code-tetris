@@ -1,6 +1,6 @@
 export { bindHandleKeys }
 
-import { bindTryMove } from "./move.js"
+import { bindTryMove, bindDrop } from "./move.js"
 import { bindTryRotate } from "./rotate.js"
 import { render } from "../view/render.js"
 
@@ -9,6 +9,7 @@ function bindHandleKeys(getState, setOmino, setPosition) {
   const tryMoveRight = bindTryMove('right', getState, setPosition)
   const tryMoveDown = bindTryMove('down', getState, setPosition)
   const tryRotate = bindTryRotate(getState, setOmino)
+  const drop = bindDrop(getState, setPosition)
 
   return function handleKeys(event) {
     const { key } = event
@@ -17,6 +18,7 @@ function bindHandleKeys(getState, setOmino, setPosition) {
     else if (key === 'ArrowLeft') tryMoveLeft()
     else if (key === 'ArrowDown') tryMoveDown()
     else if (key === 'ArrowUp') tryRotate()
+    else if (key === ' ') drop()
     else return
 
     const {frozen, omino, position} = getState()

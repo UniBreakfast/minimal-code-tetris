@@ -1,4 +1,4 @@
-export { bindTryMove }
+export { bindTryMove, bindDrop }
 
 import { doesIntersect, doesCollide } from '../model/checks.js'
 
@@ -18,6 +18,21 @@ function bindTryMove(direction, getState, setPosition) {
     setPosition(expectedPosition)
     return true
   } 
+}
+
+function bindDrop(getState, setPosition) {
+
+  return function drop() {
+    const { frozen, omino, position } = getState()
+    let [r, c] = position
+    let newPosition
+
+    do { newPosition = [++r, c] } while (
+      !doesIntersect(omino, frozen, newPosition) && 
+      !doesCollide(omino, newPosition)
+    )
+    setPosition([r - 1, c])
+  }
 }
 
 const down = [1, 0]
