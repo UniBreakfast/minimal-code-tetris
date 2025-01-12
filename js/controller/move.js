@@ -11,7 +11,7 @@ function bindTryMove(direction, getState, setPosition) {
     const expectedPosition = [r + dr, c + dc]
 
     if (
-      doesIntersect(omino, frozen, expectedPosition) || 
+      doesIntersect(frozen, omino, expectedPosition) || 
       doesCollide(omino, expectedPosition)
     ) return false
     
@@ -28,7 +28,7 @@ function bindDrop(getState, setPosition) {
     let newPosition
 
     do { newPosition = [++r, c] } while (
-      !doesIntersect(omino, frozen, newPosition) && 
+      !doesIntersect(frozen, omino, newPosition) && 
       !doesCollide(omino, newPosition)
     )
     setPosition([r - 1, c])

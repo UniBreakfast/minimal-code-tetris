@@ -2,7 +2,7 @@ export { doesIntersect, doesCollide }
 
 import { rowCount, columnCount } from "../../config.js"
 
-function doesIntersect(omino, frozen, position) {
+function doesIntersect(frozen, omino, position) {
   const [r, c] = position
   
   return omino.some((row, i) => row.some((block, j) => {
